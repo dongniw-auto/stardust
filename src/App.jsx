@@ -15,6 +15,7 @@ function App() {
   const [filters, setFilters] = useState({
     petFriendly: false,
     kidFriendly: false,
+    libraryParkPass: false,
     difficulty: 'all',
   })
 
@@ -22,6 +23,7 @@ function App() {
     return spotList.filter((s) => {
       if (f.petFriendly && !s.petFriendly) return false
       if (f.kidFriendly && !s.kidFriendly) return false
+      if (f.libraryParkPass && !s.libraryParkPass) return false
       if (f.difficulty !== 'all' && s.difficulty !== f.difficulty) return false
       return true
     })

@@ -130,3 +130,7 @@
   outline: 2px solid var(--green);
   outline-offset: 1px;
 }
+
+.library-pass-toggle .filter-label {
+  color: #e65100;
+}

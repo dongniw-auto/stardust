@@ -62,9 +62,17 @@ export default function SpotList({ spots, selectedSpot, onSpotSelect, onPlanVisi
                 {!spot.petFriendly && (
                   <span className="tag no-pet" title={spot.petNotes}>No Pets</span>
                 )}
+                {spot.libraryParkPass && (
+                  <span className="tag library-pass" title="Free entry with Santa Clara County Library Park Pass">FREE Pass</span>
+                )}
               </div>
             </div>
             <p className="spot-desc">{spot.description}</p>
+            {spot.sourceUrl && (
+              <a className="source-link" href={spot.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                Source info
+              </a>
+            )}
             <button
               className="plan-btn"
               onClick={(e) => {

@@ -3,8 +3,8 @@ import './SearchBar.css'
 
 const REGIONS = [
   { name: 'San Francisco Bay Area', lat: 37.7749, lng: -122.4194 },
-  { name: 'Los Angeles', lat: 34.0522, lng: -118.2437 },
-  { name: 'Pacific Northwest', lat: 47.6062, lng: -122.3321 },
+  { name: 'Santa Clara County', lat: 37.3541, lng: -121.9552 },
+  { name: 'All Bay Area', lat: 37.5585, lng: -122.1711 },
 ]
 
 export default function SearchBar({ onSearch, onLocationSearch, filters, onFilterChange }) {
@@ -101,6 +101,14 @@ export default function SearchBar({ onSearch, onLocationSearch, filters, onFilte
             onChange={(e) => onFilterChange({ ...filters, kidFriendly: e.target.checked })}
           />
           <span className="filter-label">Kid-Friendly</span>
+        </label>
+        <label className="filter-toggle library-pass-toggle">
+          <input
+            type="checkbox"
+            checked={filters.libraryParkPass}
+            onChange={(e) => onFilterChange({ ...filters, libraryParkPass: e.target.checked })}
+          />
+          <span className="filter-label">Library Park Pass</span>
         </label>
         <select
           className="difficulty-select"
