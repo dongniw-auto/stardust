@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Old root-level build artifacts (deploy goes to docs/)
+/assets
+/favicon.svg
+/icons.svg
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
