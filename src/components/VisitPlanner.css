@@ -329,3 +329,49 @@
   background: #ffebee;
   color: #c62828;
 }
+
+.planner-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 20px;
+}
+
+.save-plan-btn {
+  flex: 1;
+  padding: 12px;
+  background: var(--green, #4a7c23);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.save-plan-btn:hover {
+  background: var(--green-dark, #2d5016);
+}
+
+.delete-plan-btn {
+  padding: 12px 20px;
+  background: none;
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.delete-plan-btn:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+.save-confirm {
+  text-align: center;
+  color: var(--green, #4a7c23);
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 8px;
+}

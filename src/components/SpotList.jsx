@@ -18,7 +18,7 @@ function StarRating({ rating }) {
   )
 }
 
-export default function SpotList({ spots, selectedSpot, onSpotSelect, onPlanVisit }) {
+export default function SpotList({ spots, selectedSpot, onSpotSelect, onPlanVisit, starred = [], onToggleStar, savedPlans = {} }) {
   if (spots.length === 0) {
     return (
       <div className="no-results">
@@ -39,9 +39,19 @@ export default function SpotList({ spots, selectedSpot, onSpotSelect, onPlanVisi
           <div className="spot-image-wrap">
             <img src={spot.image} alt={spot.name} className="spot-image" loading="lazy" />
             <span className={`difficulty-pill ${spot.difficulty}`}>{spot.difficulty}</span>
+            <button
+              className={`star-btn ${starred.includes(spot.id) ? 'starred' : ''}`}
+              onClick={(e) => { e.stopPropagation(); onToggleStar(spot.id) }}
+              title={starred.includes(spot.id) ? 'Remove from saved' : 'Save for later'}
+            >
+              {starred.includes(spot.id) ? '★' : '☆'}
+            </button>
           </div>
           <div className="spot-info">
-            <h3 className="spot-name">{spot.name}</h3>
+            <div className="spot-name-row">
+              <h3 className="spot-name">{spot.name}</h3>
+              {savedPlans[spot.id] && <span className="planned-badge">Planned</span>}
+            </div>
             <p className="spot-location">{spot.location}</p>
             <div className="spot-stats">
               <span>{spot.distance} mi</span>
@@ -74,13 +84,13 @@ export default function SpotList({ spots, selectedSpot, onSpotSelect, onPlanVisi
               </a>
             )}
             <button
-              className="plan-btn"
+              className={`plan-btn ${savedPlans[spot.id] ? 'has-plan' : ''}`}
               onClick={(e) => {
                 e.stopPropagation()
                 onPlanVisit(spot)
               }}
             >
-              Plan Visit
+              {savedPlans[spot.id] ? 'View Plan' : 'Plan Visit'}
             </button>
           </div>
         </div>

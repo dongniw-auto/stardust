@@ -134,3 +134,7 @@
 .library-pass-toggle .filter-label {
   color: #e65100;
 }
+
+.starred-toggle .filter-label {
+  color: #f59e0b;
+}

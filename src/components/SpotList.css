@@ -190,3 +190,55 @@
   font-weight: 500;
   margin-bottom: 8px;
 }
+
+.star-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  line-height: 1;
+}
+
+.star-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+.star-btn.starred {
+  background: rgba(245, 158, 11, 0.9);
+  color: white;
+}
+
+.spot-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.planned-badge {
+  font-size: 11px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  background: var(--green-light);
+  color: var(--green-dark);
+  white-space: nowrap;
+}
+
+.plan-btn.has-plan {
+  background: var(--blue, #3498db);
+}
+
+.plan-btn.has-plan:hover {
+  background: #2980b9;
+}

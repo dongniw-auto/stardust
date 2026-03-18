@@ -12,13 +12,14 @@ function estimateDrivingTime(distanceMiles) {
   return Math.round(distanceMiles * 2)
 }
 
-export default function VisitPlanner({ spot, onClose }) {
-  const [visitDate, setVisitDate] = useState('')
-  const [startTime, setStartTime] = useState('08:00')
-  const [drivingDistance, setDrivingDistance] = useState(30)
-  const [bringPets, setBringPets] = useState(false)
-  const [bringKids, setBringKids] = useState(false)
-  const [checkedItems, setCheckedItems] = useState({})
+export default function VisitPlanner({ spot, onClose, savedPlan, onSavePlan, onDeletePlan }) {
+  const [visitDate, setVisitDate] = useState(savedPlan?.visitDate || '')
+  const [startTime, setStartTime] = useState(savedPlan?.startTime || '08:00')
+  const [drivingDistance, setDrivingDistance] = useState(savedPlan?.drivingDistance || 30)
+  const [bringPets, setBringPets] = useState(savedPlan?.bringPets || false)
+  const [bringKids, setBringKids] = useState(savedPlan?.bringKids || false)
+  const [checkedItems, setCheckedItems] = useState(savedPlan?.checkedItems || {})
+  const [saved, setSaved] = useState(!!savedPlan)
 
   const drivingTime = estimateDrivingTime(drivingDistance)
   const hikingTime = spot.estimatedHikingTime
@@ -226,6 +227,27 @@ export default function VisitPlanner({ spot, onClose }) {
               ))}
             </div>
           </section>
+
+          <div className="planner-actions">
+            <button
+              className="save-plan-btn"
+              onClick={() => {
+                onSavePlan({ visitDate, startTime, drivingDistance, bringPets, bringKids, checkedItems, savedAt: new Date().toISOString() })
+                setSaved(true)
+              }}
+            >
+              {saved ? 'Update Plan' : 'Save Plan'}
+            </button>
+            {saved && (
+              <button
+                className="delete-plan-btn"
+                onClick={() => { onDeletePlan(); setSaved(false) }}
+              >
+                Delete Plan
+              </button>
+            )}
+          </div>
+          {saved && <p className="save-confirm">Plan saved!</p>}
         </div>
       </div>
     </div>

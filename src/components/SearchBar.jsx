@@ -110,6 +110,14 @@ export default function SearchBar({ onSearch, onLocationSearch, filters, onFilte
           />
           <span className="filter-label">Library Park Pass</span>
         </label>
+        <label className="filter-toggle starred-toggle">
+          <input
+            type="checkbox"
+            checked={filters.starredOnly}
+            onChange={(e) => onFilterChange({ ...filters, starredOnly: e.target.checked })}
+          />
+          <span className="filter-label">Starred Only</span>
+        </label>
         <select
           className="difficulty-select"
           value={filters.difficulty}

@@ -3,8 +3,16 @@ import SearchBar from './components/SearchBar'
 import SpotList from './components/SpotList'
 import MapView from './components/MapView'
 import VisitPlanner from './components/VisitPlanner'
+import SavedPlans from './components/SavedPlans'
 import { SAMPLE_SPOTS } from './data/spots'
 import './App.css'
+
+function loadFromStorage(key, fallback) {
+  try {
+    const val = localStorage.getItem(key)
+    return val ? JSON.parse(val) : fallback
+  } catch { return fallback }
+}
 
 function App() {
   const [spots] = useState(SAMPLE_SPOTS)
@@ -12,22 +20,52 @@ function App() {
   const [selectedSpot, setSelectedSpot] = useState(null)
   const [planningSpot, setPlanningSpot] = useState(null)
   const [mapCenter, setMapCenter] = useState([37.7749, -122.4194])
+  const [starred, setStarred] = useState(() => loadFromStorage('starredSpots', []))
+  const [savedPlans, setSavedPlans] = useState(() => loadFromStorage('savedPlans', {}))
+  const [showSavedPlans, setShowSavedPlans] = useState(false)
   const [filters, setFilters] = useState({
     petFriendly: false,
     kidFriendly: false,
     libraryParkPass: false,
+    starredOnly: false,
     difficulty: 'all',
   })
 
-  const applyFilters = (spotList, f) => {
+  const toggleStar = useCallback((spotId) => {
+    setStarred((prev) => {
+      const next = prev.includes(spotId) ? prev.filter((id) => id !== spotId) : [...prev, spotId]
+      localStorage.setItem('starredSpots', JSON.stringify(next))
+      return next
+    })
+  }, [])
+
+  const savePlan = useCallback((spotId, plan) => {
+    setSavedPlans((prev) => {
+      const next = { ...prev, [spotId]: plan }
+      localStorage.setItem('savedPlans', JSON.stringify(next))
+      return next
+    })
+  }, [])
+
+  const deletePlan = useCallback((spotId) => {
+    setSavedPlans((prev) => {
+      const next = { ...prev }
+      delete next[spotId]
+      localStorage.setItem('savedPlans', JSON.stringify(next))
+      return next
+    })
+  }, [])
+
+  const applyFilters = useCallback((spotList, f) => {
     return spotList.filter((s) => {
       if (f.petFriendly && !s.petFriendly) return false
       if (f.kidFriendly && !s.kidFriendly) return false
       if (f.libraryParkPass && !s.libraryParkPass) return false
+      if (f.starredOnly && !starred.includes(s.id)) return false
       if (f.difficulty !== 'all' && s.difficulty !== f.difficulty) return false
       return true
     })
-  }
+  }, [starred])
 
   const handleSearch = useCallback((query) => {
     if (!query.trim()) {
@@ -102,14 +140,24 @@ function App() {
         </div>
 
         <div className="list-section">
-          <h2 className="section-title">
-            {filteredSpots.length} Trail{filteredSpots.length !== 1 ? 's' : ''} Found
-          </h2>
+          <div className="list-header">
+            <h2 className="section-title">
+              {filteredSpots.length} Trail{filteredSpots.length !== 1 ? 's' : ''} Found
+            </h2>
+            {Object.keys(savedPlans).length > 0 && (
+              <button className="saved-plans-btn" onClick={() => setShowSavedPlans(true)}>
+                Saved Plans ({Object.keys(savedPlans).length})
+              </button>
+            )}
+          </div>
           <SpotList
             spots={filteredSpots}
             selectedSpot={selectedSpot}
             onSpotSelect={setSelectedSpot}
             onPlanVisit={setPlanningSpot}
+            starred={starred}
+            onToggleStar={toggleStar}
+            savedPlans={savedPlans}
           />
         </div>
       </div>
@@ -118,6 +166,19 @@ function App() {
         <VisitPlanner
           spot={planningSpot}
           onClose={() => setPlanningSpot(null)}
+          savedPlan={savedPlans[planningSpot.id]}
+          onSavePlan={(plan) => savePlan(planningSpot.id, plan)}
+          onDeletePlan={() => deletePlan(planningSpot.id)}
+        />
+      )}
+
+      {showSavedPlans && (
+        <SavedPlans
+          plans={savedPlans}
+          spots={spots}
+          onClose={() => setShowSavedPlans(false)}
+          onDeletePlan={deletePlan}
+          onOpenPlan={(spot) => { setShowSavedPlans(false); setPlanningSpot(spot) }}
         />
       )}
     </div>
