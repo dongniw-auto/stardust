@@ -22,11 +22,29 @@ export default function SearchBar({ onSearch, onLocationSearch, filters, onFilte
 
   const handleUseMyLocation = () => {
     if (navigator.geolocation) {
+      setQuery('Locating...')
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          onLocationSearch(pos.coords.latitude, pos.coords.longitude, '')
+          const { latitude, longitude } = pos.coords
+          fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
+            .then((r) => r.json())
+            .then((data) => {
+              const addr = data.address || {}
+              const city = addr.city || addr.town || addr.village || addr.county || ''
+              const state = addr.state || ''
+              const label = [city, state].filter(Boolean).join(', ')
+              setQuery(label || `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`)
+              onLocationSearch(latitude, longitude, label)
+            })
+            .catch(() => {
+              setQuery(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`)
+              onLocationSearch(latitude, longitude, '')
+            })
         },
-        () => alert('Could not get your location. Please search by name instead.')
+        () => {
+          setQuery('')
+          alert('Could not get your location. Please search by name instead.')
+        }
       )
     }
   }
