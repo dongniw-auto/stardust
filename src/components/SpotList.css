@@ -1,17 +1,17 @@
 .spot-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .spot-card {
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow);
   cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.2s;
-  border: 2px solid transparent;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
 }
 
 .spot-card:hover {
@@ -20,7 +20,7 @@
 }
 
 .spot-card.selected {
-  border-color: var(--green);
+  box-shadow: 0 0 0 2px var(--accent), var(--shadow-lg);
 }
 
 .spot-image-wrap {
@@ -40,35 +40,39 @@
   top: 10px;
   right: 10px;
   padding: 3px 12px;
-  border-radius: 20px;
+  border-radius: 14px;
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .difficulty-pill.easy {
-  background: rgba(74, 124, 35, 0.9);
+  background: rgba(52, 199, 89, 0.85);
   color: white;
 }
 
 .difficulty-pill.moderate {
-  background: rgba(230, 126, 34, 0.9);
+  background: rgba(255, 149, 0, 0.85);
   color: white;
 }
 
 .difficulty-pill.hard {
-  background: rgba(231, 76, 60, 0.9);
+  background: rgba(255, 59, 48, 0.85);
   color: white;
 }
 
 .spot-info {
-  padding: 14px 16px;
+  padding: 12px 14px;
 }
 
 .spot-name {
   font-size: 17px;
+  font-weight: 600;
   margin: 0 0 2px;
   color: var(--text-h);
+  letter-spacing: -0.2px;
 }
 
 .spot-location {
@@ -82,7 +86,7 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  color: var(--text);
+  color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
@@ -98,7 +102,7 @@
 }
 
 .stars {
-  color: #f59e0b;
+  color: #ff9500;
   font-size: 14px;
 }
 
@@ -121,28 +125,28 @@
 }
 
 .tag.pet {
-  background: #e8f5e0;
-  color: #2d5016;
+  background: var(--green-light);
+  color: var(--green-dark);
 }
 
 .tag.kid {
-  background: #e3f2fd;
-  color: #1565c0;
+  background: rgba(0, 122, 255, 0.1);
+  color: var(--accent);
 }
 
 .tag.no-pet {
-  background: #f5f5f5;
-  color: #999;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .tag.library-pass {
-  background: #fff3e0;
-  color: #e65100;
+  background: rgba(255, 149, 0, 0.12);
+  color: #c77600;
 }
 
 .spot-desc {
   font-size: 13px;
-  color: var(--text);
+  color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 10px;
   display: -webkit-box;
@@ -154,9 +158,10 @@
 .source-link {
   display: inline-block;
   font-size: 12px;
-  color: var(--blue, #3498db);
+  color: var(--accent);
   margin-bottom: 8px;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .source-link:hover {
@@ -166,17 +171,17 @@
 .plan-btn {
   width: 100%;
   padding: 10px;
-  background: var(--green);
+  background: var(--accent);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--radius);
+  font-size: 15px;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: opacity 0.2s;
 }
 
 .plan-btn:hover {
-  background: var(--green-dark);
+  opacity: 0.85;
 }
 
 .no-results {
@@ -195,7 +200,9 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: none;
   width: 32px;
   height: 32px;
@@ -210,12 +217,12 @@
 }
 
 .star-btn:hover {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   transform: scale(1.1);
 }
 
 .star-btn.starred {
-  background: rgba(245, 158, 11, 0.9);
+  background: rgba(255, 149, 0, 0.9);
   color: white;
 }
 
@@ -236,28 +243,28 @@
 }
 
 .plan-btn.has-plan {
-  background: var(--blue, #3498db);
+  background: var(--green);
 }
 
 .plan-btn.has-plan:hover {
-  background: #2980b9;
+  opacity: 0.85;
 }
 
 .fee-badge {
   font-size: 12px;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   margin-bottom: 6px;
   display: inline-block;
 }
 
 .fee-badge.free {
-  background: #e8f5e0;
-  color: #2d5016;
+  background: var(--green-light);
+  color: var(--green-dark);
 }
 
 .fee-badge.paid {
-  background: #fff8e1;
-  color: #f57f17;
+  background: rgba(255, 149, 0, 0.12);
+  color: #c77600;
 }

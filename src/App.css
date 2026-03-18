@@ -1,34 +1,46 @@
 .app {
   min-height: 100vh;
   background: var(--bg);
+  padding-bottom: 84px;
 }
 
+/* Header */
 .app-header {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
-  color: white;
-  padding: 40px 24px 32px;
+  background: var(--card-bg);
+  padding: 52px 20px 16px;
   text-align: center;
+  border-bottom: 0.5px solid var(--border);
 }
 
-.app-header h1 {
-  color: white;
-  font-size: 40px;
-  margin: 0 0 8px;
-  letter-spacing: -1px;
+.app-title {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.app-header .subtitle {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 18px;
+.app-subtitle {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 400;
 }
 
+/* Page */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Main content grid */
 .main-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
 }
 
 @media (max-width: 900px) {
@@ -38,21 +50,22 @@
 }
 
 .map-section {
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  height: 500px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  height: 480px;
+  box-shadow: var(--shadow);
 }
 
 .list-section {
-  padding: 0 0 0 24px;
-  max-height: 500px;
+  padding: 0 0 0 16px;
+  max-height: 480px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 900px) {
   .list-section {
-    padding: 24px 0 0;
+    padding: 16px 0 0;
     max-height: none;
   }
 }
@@ -61,7 +74,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .list-header .section-title {
@@ -69,23 +82,71 @@
 }
 
 .section-title {
-  font-size: 20px;
-  margin: 0 0 16px;
-  color: var(--text-h);
-}
-
-.saved-plans-btn {
-  padding: 6px 16px;
-  background: var(--blue, #3498db);
-  color: white;
-  border: none;
-  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  white-space: nowrap;
-  transition: background 0.2s;
+  margin: 0 0 12px;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.saved-plans-btn:hover {
-  background: #2980b9;
+/* Bottom Tab Bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 0.5px solid var(--border);
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+  z-index: 999;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.tab-item.active {
+  color: var(--accent);
+}
+
+.tab-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.tab-item.active .tab-icon {
+  stroke: var(--accent);
+}
+
+.tab-badge {
+  position: absolute;
+  top: 2px;
+  right: calc(50% - 20px);
+  background: var(--red);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
 }

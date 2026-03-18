@@ -22,7 +22,7 @@ function App() {
   const [mapCenter, setMapCenter] = useState([37.7749, -122.4194])
   const [starred, setStarred] = useState(() => loadFromStorage('starredSpots', []))
   const [savedPlans, setSavedPlans] = useState(() => loadFromStorage('savedPlans', {}))
-  const [showSavedPlans, setShowSavedPlans] = useState(false)
+  const [activeTab, setActiveTab] = useState('explore')
   const [filters, setFilters] = useState({
     petFriendly: false,
     kidFriendly: false,
@@ -94,7 +94,6 @@ function App() {
       )
       setFilteredSpots(applyFilters(results.length > 0 ? results : spots, filters))
     } else {
-      // No region name (e.g. "Use my location") -- filter by proximity (50km radius)
       const toRad = (deg) => (deg * Math.PI) / 180
       const distanceKm = (lat1, lng1, lat2, lng2) => {
         const R = 6371
@@ -115,52 +114,64 @@ function App() {
     setFilteredSpots(applyFilters(spots, newFilters))
   }
 
+  const planCount = Object.keys(savedPlans).length
+
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Stardust</h1>
-        <p className="subtitle">Discover trails, museums, heritage sites & hidden gems</p>
+        <h1 className="app-title">Stardust</h1>
+        <p className="app-subtitle">Discover trails, museums, heritage sites & hidden gems</p>
       </header>
 
-      <SearchBar
-        onSearch={handleSearch}
-        onLocationSearch={handleLocationSearch}
-        filters={filters}
-        onFilterChange={handleFilterChange}
-      />
-
-      <div className="main-content">
-        <div className="map-section">
-          <MapView
-            spots={filteredSpots}
-            center={mapCenter}
-            selectedSpot={selectedSpot}
-            onSpotSelect={setSelectedSpot}
+      {activeTab === 'explore' && (
+        <main className="page">
+          <SearchBar
+            onSearch={handleSearch}
+            onLocationSearch={handleLocationSearch}
+            filters={filters}
+            onFilterChange={handleFilterChange}
           />
-        </div>
 
-        <div className="list-section">
-          <div className="list-header">
-            <h2 className="section-title">
-              {filteredSpots.length} Place{filteredSpots.length !== 1 ? 's' : ''} Found
-            </h2>
-            {Object.keys(savedPlans).length > 0 && (
-              <button className="saved-plans-btn" onClick={() => setShowSavedPlans(true)}>
-                Saved Plans ({Object.keys(savedPlans).length})
-              </button>
-            )}
+          <div className="main-content">
+            <div className="map-section">
+              <MapView
+                spots={filteredSpots}
+                center={mapCenter}
+                selectedSpot={selectedSpot}
+                onSpotSelect={setSelectedSpot}
+              />
+            </div>
+
+            <div className="list-section">
+              <div className="list-header">
+                <h2 className="section-title">
+                  {filteredSpots.length} Place{filteredSpots.length !== 1 ? 's' : ''}
+                </h2>
+              </div>
+              <SpotList
+                spots={filteredSpots}
+                selectedSpot={selectedSpot}
+                onSpotSelect={setSelectedSpot}
+                onPlanVisit={setPlanningSpot}
+                starred={starred}
+                onToggleStar={toggleStar}
+                savedPlans={savedPlans}
+              />
+            </div>
           </div>
-          <SpotList
-            spots={filteredSpots}
-            selectedSpot={selectedSpot}
-            onSpotSelect={setSelectedSpot}
-            onPlanVisit={setPlanningSpot}
-            starred={starred}
-            onToggleStar={toggleStar}
-            savedPlans={savedPlans}
+        </main>
+      )}
+
+      {activeTab === 'plans' && (
+        <main className="page">
+          <SavedPlans
+            plans={savedPlans}
+            spots={spots}
+            onDeletePlan={deletePlan}
+            onOpenPlan={(spot) => { setPlanningSpot(spot) }}
           />
-        </div>
-      </div>
+        </main>
+      )}
 
       {planningSpot && (
         <VisitPlanner
@@ -172,15 +183,31 @@ function App() {
         />
       )}
 
-      {showSavedPlans && (
-        <SavedPlans
-          plans={savedPlans}
-          spots={spots}
-          onClose={() => setShowSavedPlans(false)}
-          onDeletePlan={deletePlan}
-          onOpenPlan={(spot) => { setShowSavedPlans(false); setPlanningSpot(spot) }}
-        />
-      )}
+      <nav className="tab-bar">
+        <button
+          className={`tab-item ${activeTab === 'explore' ? 'active' : ''}`}
+          onClick={() => setActiveTab('explore')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="tab-icon">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <span>Explore</span>
+        </button>
+        <button
+          className={`tab-item ${activeTab === 'plans' ? 'active' : ''}`}
+          onClick={() => setActiveTab('plans')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="tab-icon">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Plans</span>
+          {planCount > 0 && <span className="tab-badge">{planCount}</span>}
+        </button>
+      </nav>
     </div>
   )
 }
