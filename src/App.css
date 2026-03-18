@@ -1,0 +1,64 @@
+.app {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.app-header {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c23 50%, #3d6b1c 100%);
+  color: white;
+  padding: 40px 24px 32px;
+  text-align: center;
+}
+
+.app-header h1 {
+  color: white;
+  font-size: 40px;
+  margin: 0 0 8px;
+  letter-spacing: -1px;
+}
+
+.app-header .subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 18px;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.map-section {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 500px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.list-section {
+  padding: 0 0 0 24px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .list-section {
+    padding: 24px 0 0;
+    max-height: none;
+  }
+}
+
+.section-title {
+  font-size: 20px;
+  margin: 0 0 16px;
+  color: var(--text-h);
+}
