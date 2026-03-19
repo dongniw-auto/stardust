@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import './SpotList.css'
 
 function formatTime(minutes) {
@@ -28,11 +29,20 @@ export default function SpotList({ spots, selectedSpot, onSpotSelect, onPlanVisi
     )
   }
 
+  const cardRefs = useRef({})
+
+  useEffect(() => {
+    if (selectedSpot && cardRefs.current[selectedSpot.id]) {
+      cardRefs.current[selectedSpot.id].scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }, [selectedSpot?.id])
+
   return (
     <div className="spot-list">
       {spots.map((spot) => (
         <div
           key={spot.id}
+          ref={(el) => { cardRefs.current[spot.id] = el }}
           className={`spot-card ${selectedSpot?.id === spot.id ? 'selected' : ''}`}
           onClick={() => onSpotSelect(spot)}
         >

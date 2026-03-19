@@ -95,6 +95,11 @@ function App() {
     }
   }, [spots, filters])
 
+  const handleSpotSelect = useCallback((spot) => {
+    setSelectedSpot(spot)
+    if (spot) setMapCenter([spot.lat, spot.lng])
+  }, [])
+
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters)
     setFilteredSpots(applyFilters(spots, newFilters))
@@ -135,7 +140,7 @@ function App() {
                 spots={filteredSpots}
                 center={mapCenter}
                 selectedSpot={selectedSpot}
-                onSpotSelect={setSelectedSpot}
+                onSpotSelect={handleSpotSelect}
               />
             </div>
 
@@ -148,7 +153,7 @@ function App() {
               <SpotList
                 spots={filteredSpots}
                 selectedSpot={selectedSpot}
-                onSpotSelect={setSelectedSpot}
+                onSpotSelect={handleSpotSelect}
                 onPlanVisit={setPlanningSpot}
                 starred={starred}
                 onToggleStar={toggleStar}

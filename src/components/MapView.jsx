@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -33,11 +33,18 @@ function getSpotIcon(spot) {
   return iconByDifficulty[spot.difficulty] || greenIcon
 }
 
-function MapUpdater({ center }) {
+function MapUpdater({ center, selectedSpot, markerRefs }) {
   const map = useMap()
   useEffect(() => {
     map.setView(center, map.getZoom())
   }, [center, map])
+
+  useEffect(() => {
+    if (selectedSpot && markerRefs.current[selectedSpot.id]) {
+      markerRefs.current[selectedSpot.id].openPopup()
+    }
+  }, [selectedSpot?.id])
+
   return null
 }
 
@@ -48,18 +55,21 @@ function formatTime(minutes) {
 }
 
 export default function MapView({ spots, center, selectedSpot, onSpotSelect }) {
+  const markerRefs = useRef({})
+
   return (
     <MapContainer center={center} zoom={9} className="map-container" scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <MapUpdater center={center} />
+      <MapUpdater center={center} selectedSpot={selectedSpot} markerRefs={markerRefs} />
       {spots.map((spot) => (
         <Marker
           key={spot.id}
           position={[spot.lat, spot.lng]}
           icon={getSpotIcon(spot)}
+          ref={(el) => { if (el) markerRefs.current[spot.id] = el }}
           eventHandlers={{ click: () => onSpotSelect(spot) }}
         >
           <Popup>
