@@ -383,3 +383,36 @@
   color: var(--accent);
   font-weight: 500;
 }
+
+/* Day/Week view toggle — mobile only */
+.cal-view-toggle {
+  display: none; /* hidden on desktop */
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+  border: 1px solid var(--border);
+}
+
+.cal-view-btn {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cal-view-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+@media (max-width: 599px) {
+  .cal-view-toggle {
+    display: flex;
+  }
+}
