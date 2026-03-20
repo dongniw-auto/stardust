@@ -493,7 +493,7 @@
 }
 
 /* Day view grid overrides */
-.gcal-header-day {
+.gcal-header-single {
   grid-template-columns: 48px 1fr;
 }
 

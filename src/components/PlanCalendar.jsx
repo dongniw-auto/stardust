@@ -328,7 +328,7 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           {stripDays.map((d) => {
-            const isSelected = d.dateStr === dateToStr(selectedDay)
+            const isSelected = d.dateStr === selectedDateStr
             const isToday = d.dateStr === todayStr
             return (
               <button
@@ -466,7 +466,7 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
       ) : (
         <div className="gcal-container gcal-container-day">
           {/* Header: single day */}
-          <div className="gcal-header gcal-header-day">
+          <div className="gcal-header gcal-header-single">
             <div className="gcal-header-gutter" />
             <div className="gcal-header-day">
               <div className="gcal-header-day-name">{DAYS[selectedDay.getDay()]}</div>
