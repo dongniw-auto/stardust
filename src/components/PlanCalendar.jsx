@@ -1,4 +1,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import useGoogleCalendar from '../hooks/useGoogleCalendar'
 import './PlanCalendar.css'
 
@@ -77,6 +80,78 @@ function fmtGDate(d) {
     String(d.getDate()).padStart(2, '0') + 'T' +
     String(d.getHours()).padStart(2, '0') +
     String(d.getMinutes()).padStart(2, '0') + '00'
+}
+
+function createNumberedIcon(num) {
+  return L.divIcon({
+    className: 'itinerary-marker',
+    html: `<div class="itinerary-marker-inner">${num}</div>`,
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+    popupAnchor: [0, -15],
+  })
+}
+
+function ItineraryBoundsFitter({ positions }) {
+  const map = useMap()
+  useEffect(() => {
+    if (positions.length === 0) return
+    if (positions.length === 1) {
+      map.setView(positions[0], 13)
+      return
+    }
+    map.fitBounds(L.latLngBounds(positions), { padding: [32, 32] })
+  }, [map]) // eslint-disable-line react-hooks/exhaustive-deps
+  return null
+}
+
+function ItineraryMap({ plans }) {
+  const orderedSpots = [...plans]
+    .sort((a, b) => {
+      if (a.plan.startTime && b.plan.startTime) return a.plan.startTime.localeCompare(b.plan.startTime)
+      if (a.plan.startTime) return -1
+      if (b.plan.startTime) return 1
+      return 0
+    })
+    .map((e) => e.spot)
+    .filter((s) => s.lat != null && s.lng != null)
+
+  if (orderedSpots.length === 0) return null
+
+  const positions = orderedSpots.map((s) => [s.lat, s.lng])
+
+  return (
+    <div className="itinerary-map-wrap">
+      <MapContainer
+        center={positions[0]}
+        zoom={11}
+        className="itinerary-map"
+        scrollWheelZoom={false}
+        zoomControl={true}
+        attributionControl={false}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <ItineraryBoundsFitter positions={positions} />
+        {positions.length > 1 && (
+          <Polyline positions={positions} color="#c2703e" weight={3} dashArray="8 5" />
+        )}
+        {orderedSpots.map((spot, i) => (
+          <Marker
+            key={spot.id}
+            position={[spot.lat, spot.lng]}
+            icon={createNumberedIcon(i + 1)}
+          >
+            <Popup>
+              <div style={{ minWidth: 140 }}>
+                <strong>{i + 1}. {spot.name}</strong>
+                <div style={{ fontSize: 12, marginTop: 3, color: '#6b5d52' }}>{spot.location}</div>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
+  )
 }
 
 function getWeekStart(date) {
@@ -506,41 +581,47 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
           </div>
         </div>
       ) : (
-        <div className="gcal-container">
-          {/* Header: single day */}
-          <div className="gcal-header gcal-header-single">
-            <div className="gcal-header-gutter" />
-            <div className="gcal-header-day">
-              <div className="gcal-header-day-name">{DAYS[selectedDay.getDay()]}</div>
-              <div className={`gcal-header-day-num ${selectedDateStr === todayStr ? 'today-num' : ''}`}>
-                {selectedDay.getDate()}
+        <>
+          <div className="gcal-container">
+            {/* Header: single day */}
+            <div className="gcal-header gcal-header-single">
+              <div className="gcal-header-gutter" />
+              <div className="gcal-header-day">
+                <div className="gcal-header-day-name">{DAYS[selectedDay.getDay()]}</div>
+                <div className={`gcal-header-day-num ${selectedDateStr === todayStr ? 'today-num' : ''}`}>
+                  {selectedDay.getDate()}
+                </div>
+              </div>
+            </div>
+
+            {/* Time grid: single column */}
+            <div className="gcal-body gcal-body-day" ref={bodyRef}>
+              <div className="gcal-time-col">
+                {hours.map((h) => (
+                  <div key={h} className="gcal-time-label">{formatHour(h)}</div>
+                ))}
+              </div>
+              <div className={`gcal-day-col ${selectedDateStr === todayStr ? 'today-col' : ''}`}>
+                <DayColumnContent
+                  hours={hours}
+                  gcalEvents={selectedDayGcal}
+                  plans={selectedDayPlans}
+                  showNowLine={showNowLineDay}
+                  nowTop={nowTop}
+                  googleAccessToken={googleAccessToken}
+                  syncingId={syncingId}
+                  syncedIds={syncedIds}
+                  onOpenPlan={onOpenPlan}
+                  syncToGCal={syncToGCal}
+                />
               </div>
             </div>
           </div>
 
-          {/* Time grid: single column */}
-          <div className="gcal-body gcal-body-day" ref={bodyRef}>
-            <div className="gcal-time-col">
-              {hours.map((h) => (
-                <div key={h} className="gcal-time-label">{formatHour(h)}</div>
-              ))}
-            </div>
-            <div className={`gcal-day-col ${selectedDateStr === todayStr ? 'today-col' : ''}`}>
-              <DayColumnContent
-                hours={hours}
-                gcalEvents={selectedDayGcal}
-                plans={selectedDayPlans}
-                showNowLine={showNowLineDay}
-                nowTop={nowTop}
-                googleAccessToken={googleAccessToken}
-                syncingId={syncingId}
-                syncedIds={syncedIds}
-                onOpenPlan={onOpenPlan}
-                syncToGCal={syncToGCal}
-              />
-            </div>
-          </div>
-        </div>
+          {selectedDayPlans.length > 0 && (
+            <ItineraryMap key={selectedDateStr} plans={selectedDayPlans} />
+          )}
+        </>
       )}
 
       {unscheduled.length > 0 && (
