@@ -200,7 +200,7 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
   today.setHours(0, 0, 0, 0)
   const [weekStart, setWeekStart] = useState(() => getWeekStart(today))
   const [selectedDay, setSelectedDay] = useState(() => new Date(today))
-  const [calView, setCalView] = useState(() => window.innerWidth >= 600 ? 'week' : 'day') // 'day' | 'week'
+  const [calView, setCalView] = useState(() => (typeof window !== 'undefined' && window.matchMedia('(max-width: 599px)').matches) ? 'day' : 'week') // 'day' | 'week'
   const bodyRef = useRef(null)
   const [syncingId, setSyncingId] = useState(null)
   const [syncedIds, setSyncedIds] = useState(new Set())
@@ -216,14 +216,6 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
     fetchEvents(start, end)
   }, [googleAccessToken, weekStart, fetchEvents])
 
-  // Sync weekStart when selectedDay moves outside the current week (day view only)
-  useEffect(() => {
-    if (calView !== 'day') return
-    const start = getWeekStart(selectedDay)
-    if (start.getTime() !== weekStart.getTime()) {
-      setWeekStart(start)
-    }
-  }, [selectedDay, weekStart, calView])
 
   // Parse GCal events by date
   const gcalByDate = useMemo(() => {
@@ -284,12 +276,12 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
   const weekEnd = new Date(weekStart)
   weekEnd.setDate(weekEnd.getDate() + 6)
 
-  // Scroll to ~8am on mount
+  // Scroll to ~8am on mount and when switching views (bodyRef points to a new container)
   useEffect(() => {
     if (bodyRef.current) {
       bodyRef.current.scrollTop = (8 - START_HOUR) * HOUR_HEIGHT
     }
-  }, [])
+  }, [calView])
 
   const weekLabel = (() => {
     const s = weekStart
@@ -325,11 +317,13 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
     const d = new Date(selectedDay)
     d.setDate(d.getDate() - 7)
     setSelectedDay(d)
+    setWeekStart(getWeekStart(d))
   }
   const nextStripWeek = () => {
     const d = new Date(selectedDay)
     d.setDate(d.getDate() + 7)
     setSelectedDay(d)
+    setWeekStart(getWeekStart(d))
   }
 
   const hours = []
@@ -388,13 +382,15 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
         </button>
         <div className="cal-nav-title">
           <strong>{calView === 'day' ? dayLabel : weekLabel}</strong>
-          <div className="cal-view-toggle">
+          <div className="cal-view-toggle" role="group" aria-label="Calendar view">
             <button
               className={`cal-view-btn ${calView === 'day' ? 'active' : ''}`}
+              aria-pressed={calView === 'day'}
               onClick={() => setCalView('day')}
             >Day</button>
             <button
               className={`cal-view-btn ${calView === 'week' ? 'active' : ''}`}
+              aria-pressed={calView === 'week'}
               onClick={() => setCalView('week')}
             >Week</button>
           </div>
@@ -434,7 +430,8 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
               <button
                 key={d.dateStr}
                 className={`cal-day-pill ${isSelected ? 'selected' : ''} ${isToday && !isSelected ? 'is-today' : ''}`}
-                onClick={() => setSelectedDay(new Date(d.date))}
+                aria-pressed={isSelected}
+                onClick={() => { const nd = new Date(d.date); setSelectedDay(nd); setWeekStart(getWeekStart(nd)) }}
               >
                 <span className="cal-pill-name">{d.dayName}</span>
                 <span className="cal-pill-num">{d.date.getDate()}</span>
@@ -496,7 +493,7 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
           </div>
         </div>
       ) : (
-        <div className="gcal-container gcal-container-day">
+        <div className="gcal-container">
           {/* Header: single day */}
           <div className="gcal-header gcal-header-single">
             <div className="gcal-header-gutter" />
