@@ -416,3 +416,75 @@
     display: flex;
   }
 }
+
+/* Day strip */
+.cal-day-strip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+
+.cal-strip-arrow {
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 6px 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cal-strip-arrow:hover {
+  background: var(--border);
+}
+
+.cal-day-pill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cal-day-pill:hover {
+  background: var(--bg);
+}
+
+.cal-day-pill.selected {
+  background: var(--accent);
+}
+
+.cal-day-pill.selected .cal-pill-name,
+.cal-day-pill.selected .cal-pill-num {
+  color: white;
+}
+
+.cal-day-pill.is-today .cal-pill-num {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.cal-pill-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text);
+}
+
+.cal-pill-num {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-h);
+  line-height: 1.2;
+}

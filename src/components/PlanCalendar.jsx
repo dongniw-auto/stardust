@@ -172,6 +172,20 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
     return days
   }, [weekStart, plansByDate, gcalByDate])
 
+  const stripDays = useMemo(() => {
+    const days = []
+    for (let i = -3; i <= 3; i++) {
+      const d = new Date(selectedDay)
+      d.setDate(d.getDate() + i)
+      days.push({
+        date: d,
+        dateStr: dateToStr(d),
+        dayName: DAYS[d.getDay()],
+      })
+    }
+    return days
+  }, [selectedDay])
+
   const todayStr = dateToStr(today)
   const weekEnd = new Date(weekStart)
   weekEnd.setDate(weekEnd.getDate() + 6)
@@ -206,6 +220,17 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
     setWeekStart(d)
   }
   const goToday = () => setWeekStart(getWeekStart(today))
+
+  const prevStripWeek = () => {
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() - 7)
+    setSelectedDay(d)
+  }
+  const nextStripWeek = () => {
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() + 7)
+    setSelectedDay(d)
+  }
 
   const hours = []
   for (let h = START_HOUR; h <= END_HOUR; h++) hours.push(h)
@@ -291,6 +316,31 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
+
+      {calView === 'day' && (
+        <div className="cal-day-strip">
+          <button className="cal-strip-arrow" onClick={prevStripWeek}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          {stripDays.map((d) => {
+            const isSelected = d.dateStr === dateToStr(selectedDay)
+            const isToday = d.dateStr === todayStr
+            return (
+              <button
+                key={d.dateStr}
+                className={`cal-day-pill ${isSelected ? 'selected' : ''} ${isToday && !isSelected ? 'is-today' : ''}`}
+                onClick={() => setSelectedDay(new Date(d.date))}
+              >
+                <span className="cal-pill-name">{d.dayName}</span>
+                <span className="cal-pill-num">{d.date.getDate()}</span>
+              </button>
+            )
+          })}
+          <button className="cal-strip-arrow" onClick={nextStripWeek}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      )}
 
       <div className="gcal-container">
         {/* Header row */}
