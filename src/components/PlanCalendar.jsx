@@ -115,7 +115,7 @@ export default function PlanCalendar({ entries, onOpenPlan, googleAccessToken, o
     const d = new Date(today)
     return d
   })
-  const [calView, setCalView] = useState('day') // 'day' | 'week'
+  const [calView, setCalView] = useState(() => window.innerWidth >= 600 ? 'week' : 'day') // 'day' | 'week'
   const bodyRef = useRef(null)
   const [syncingId, setSyncingId] = useState(null)
   const [syncedIds, setSyncedIds] = useState(new Set())
