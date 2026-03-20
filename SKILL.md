@@ -156,6 +156,21 @@ When adding a new category, add a new SVG + `createIcon()` call and handle it in
 
 **Image guidelines:** use facility/space-focused Unsplash photos — no people, faces, or portraits. The photo ID `1507003211169` (Jake Nackos portrait) is a known bad one to avoid.
 
+**Known bad photo IDs — never use these:**
+| Photo ID | Reason |
+|---|---|
+| `1507003211169` | Portrait (Jake Nackos) |
+| `1490730141103-6cac27aaab94` | Has people in it |
+| `1501854140801-50d01698950b` | Person silhouette (sunset) |
+| `1432405972569-32d5c51e2f55` | 404s on Unsplash |
+| `1439853949212-36089b0e7e42` | 404s on Unsplash |
+| `1526139668667-76d8c985db83` | 404s on Unsplash |
+| `1464823063530-08f10943b005` | 404s on Unsplash |
+| `1544298177-e7f813c9f24d` | 404s on Unsplash |
+| `1542856391-010f196b4859` | 404s on Unsplash |
+
+**Safe default image:** `photo-1500534314209-a25ddb2bd429` (Tennessee Valley Trail — landscape, no people). Use this when no better option exists.
+
 ## Common Mistakes — Read Before Writing Code
 
 - **`setDoc` with merge does NOT handle dot-notation as nested paths** — use `updateDoc` for nested field updates
@@ -165,6 +180,9 @@ When adding a new category, add a new SVG + `createIcon()` call and handle it in
 - **Firestore security rules** need `spots/{spotId}` allow read/write
 - **Minimize new JS files in deploys** — edit existing files when possible
 - **`npm run build` resets `docs/index.html`** — every build regenerates the file with bare paths, stripping your `?v=` params. Always re-add the cache-buster after building. Use the `/deploy` skill to avoid forgetting this step.
+- **Firestore serves stale spot images until re-seed runs** — when `spots.js` images change, bump `SEED_VERSION` in `useSpots.js`. The re-seed only runs when a logged-in user visits with a new SEED_VERSION. Until then, the app shows cached Firestore data even after rebuild. Users may need to sign out and back in.
+- **Preview server must be stopped + restarted after rebuild** — `preview_eval(window.location.reload())` is not enough; the static file server caches the old bundle. Use `preview_stop` then `preview_start` to pick up new `docs/assets/index.js`.
+- **When fixing spot images, use Python regex with `sourceUrl` as anchor** — the `sourceUrl` field is unique per spot and sits just before `category` and `image`. Pattern: `(sourceUrl:[^\n]*{anchor}[^\n]*\n\s+category:[^\n]*\n\s+image:\s*")[^"]*(")`
 - **Always preview on a real mobile device before pushing `docs/`** — the dev server (`npm run dev`) won't show you layout bugs that only appear at phone widths. At minimum, use browser DevTools at 375px width before committing the build.
 
 ### CSS Responsive Patterns
