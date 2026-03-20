@@ -415,11 +415,14 @@
   .cal-view-toggle {
     display: flex;
   }
+  .cal-day-strip {
+    display: flex;
+  }
 }
 
 /* Day strip */
 .cal-day-strip {
-  display: flex;
+  display: none; /* hidden on desktop */
   align-items: center;
   gap: 4px;
   margin-bottom: 10px;
