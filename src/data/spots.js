@@ -24,7 +24,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Reservation required for parking. Shuttle available from Sausalito.",
     sourceUrl: "https://www.nps.gov/muwo/index.htm",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=500&fit=crop"
   },
   {
     id: 2,
@@ -50,7 +50,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free parking at Lands End Lookout visitor center.",
     sourceUrl: "https://www.nps.gov/goga/planyourvisit/landsend.htm",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop"
   },
   {
     id: 3,
@@ -76,7 +76,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Stanford Avenue staging area fills early on weekends. Arrive before 8am.",
     sourceUrl: "https://www.ebparks.org/parks/mission-peak",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=500&fit=crop"
   },
   {
     id: 4,
@@ -102,7 +102,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free parking at Tennessee Valley trailhead. Can fill up on weekends.",
     sourceUrl: "https://www.nps.gov/goga/planyourvisit/tennessee-valley.htm",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&h=500&fit=crop"
   },
   {
     id: 5,
@@ -128,7 +128,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Start at Old Mill Park in Mill Valley. Shuttle back from Stinson Beach on weekends.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/dipsea-trail",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=500&fit=crop"
   },
   {
     id: 6,
@@ -154,7 +154,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Multiple free parking areas throughout the park.",
     sourceUrl: "https://www.ebparks.org/parks/tilden-regional",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=800&h=500&fit=crop"
   },
 
   // === Santa Clara County Parks (Library Park Pass Eligible) ===
@@ -182,7 +182,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Hacienda entrance or Mockingbird Hill entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/almaden-quicksilver-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1542856391-010f196b4859?w=800&h=500&fit=crop"
   },
   {
     id: 102,
@@ -208,7 +208,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Main entrance on McKean Rd.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/calero-county-park--2",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=500&fit=crop"
   },
   {
     id: 103,
@@ -234,7 +234,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Main lot on Mt. Hamilton Rd.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/joseph-d-grant-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&h=500&fit=crop"
   },
   {
     id: 104,
@@ -260,7 +260,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Sandy Wool Lake lot or Downing Rd lot.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/ed-r-levin-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop"
   },
   {
     id: 105,
@@ -286,7 +286,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Main entrance on Sanborn Rd.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/sanborn-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=500&fit=crop"
   },
   {
     id: 106,
@@ -312,7 +312,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Multiple lots near park entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/mount-madonna-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&h=500&fit=crop"
   },
   {
     id: 107,
@@ -338,7 +338,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Stevens Canyon Rd entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/stevens-creek-county-park--2",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1527489377706-5bf97e608852?w=800&h=500&fit=crop"
   },
   {
     id: 108,
@@ -364,7 +364,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Main lot on Garden Hill Dr.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/vasona-lake-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&h=500&fit=crop"
   },
   {
     id: 109,
@@ -390,7 +390,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Hellyer Ave entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/hellyer-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&h=500&fit=crop"
   },
   {
     id: 110,
@@ -416,7 +416,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Alma Bridge Rd lot.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/lexington-reservoir-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&h=500&fit=crop"
   },
 
   // === Additional Santa Clara County Parks (Library Park Pass Eligible) ===
@@ -444,7 +444,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Ample parking with ADA-accessible spots.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/alviso-slough-trail",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=500&fit=crop"
   },
   {
     id: 112,
@@ -470,7 +470,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Live Oak entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/anderson-lake-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=500&fit=crop"
   },
   {
     id: 113,
@@ -496,7 +496,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Basic facilities with restrooms and picnic tables.",
     sourceUrl: "https://parks.santaclaracounty.gov/locations/chesbro-reservoir-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1432405972569-32d5c51e2f55?w=800&h=500&fit=crop"
   },
   {
     id: 114,
@@ -522,7 +522,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Open 8 AM to sunset.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/chitactac-adams-heritage-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1503435980610-a51f3ddfee50?w=800&h=500&fit=crop"
   },
   {
     id: 115,
@@ -548,7 +548,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass at multiple trailheads. $6 fee at Hellyer Park entrance.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/coyote-creek-parkway",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1439853949212-36089b0e7e42?w=800&h=500&fit=crop"
   },
   {
     id: 116,
@@ -574,7 +574,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass at Harvey Bear entrance. Vehicle fee at Coyote Lake entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/coyote-lake-harvey-bear-ranch-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1526139668667-76d8c985db83?w=800&h=500&fit=crop"
   },
   {
     id: 117,
@@ -600,7 +600,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Ample parking.",
     sourceUrl: "https://parks.santaclaracounty.gov/locations/field-sports-park/rifle-and-pistol-range",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=800&h=500&fit=crop"
   },
   {
     id: 118,
@@ -626,7 +626,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Dell Avenue entrance (1250 Dell Ave, Campbell).",
     sourceUrl: "https://www.alltrails.com/trail/us/california/los-gatos-creek-trail--5",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=500&fit=crop"
   },
   {
     id: 119,
@@ -652,7 +652,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Snell Avenue entrance.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/martial-cottle-park-loop",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1464823063530-08f10943b005?w=800&h=500&fit=crop"
   },
   {
     id: 120,
@@ -678,7 +678,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. OHV stickers mandatory.",
     sourceUrl: "https://parks.santaclaracounty.gov/locations/metcalf-motorcycle-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1502126324834-38f8e02d7160?w=800&h=500&fit=crop"
   },
   {
     id: 121,
@@ -704,7 +704,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Multiple trailheads along Capitol Avenue.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/penitencia-creek-park-loop",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=800&h=500&fit=crop"
   },
   {
     id: 122,
@@ -730,7 +730,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass but lots fill early on weekends. Arrive early!",
     sourceUrl: "https://www.alltrails.com/trail/us/california/deer-hollow-farm-trail-loop--3",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=800&h=500&fit=crop"
   },
   {
     id: 123,
@@ -756,7 +756,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Pueblo Day Use Area entrance.",
     sourceUrl: "https://www.alltrails.com/parks/us/california/santa-teresa-county-park",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=500&fit=crop"
   },
   {
     id: 124,
@@ -782,7 +782,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Limited roadside parking on Stevens Canyon Rd.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/table-mountain-trail-loop-via-charcoal-and-table-mountain-fire-roads",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1544298177-e7f813c9f24d?w=800&h=500&fit=crop"
   },
   {
     id: 125,
@@ -808,7 +808,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Main entrance with restrooms.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/uvas-reservoir",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=800&h=500&fit=crop"
   },
   {
     id: 126,
@@ -834,7 +834,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free with Library Park Pass. Lot 4 closest to trailheads. Open 8 AM to sunset.",
     sourceUrl: "https://www.alltrails.com/trail/us/california/villa-montalvo-trail",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=500&fit=crop"
   },
 
   // === Other Popular Bay Area Spots (not county parks) ===
@@ -862,7 +862,7 @@ export const SAMPLE_SPOTS = [
     parkingInfo: "Free parking but lots fill by 9am on weekends. Arrive early! Additional overflow lot on Cristo Rey Dr.",
     sourceUrl: "https://www.openspace.org/preserves/rancho-san-antonio",
     category: "outdoors",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop"
   },
 
   // === Cafes & Tea ===
@@ -890,7 +890,7 @@ export const SAMPLE_SPOTS = [
     bestSeason: "Year-round",
     parkingInfo: "Street parking and nearby lots.",
     sourceUrl: "https://www.voyagercraftcoffee.com",
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=500&fit=crop"
   },
   {
     id: 302,
@@ -916,7 +916,7 @@ export const SAMPLE_SPOTS = [
     bestSeason: "Year-round",
     parkingInfo: "Shopping center parking available.",
     sourceUrl: null,
-    image: "https://images.unsplash.com/photo-1558857563-b371033873b8?w=400&h=250&fit=crop"
+    image: "https://images.unsplash.com/photo-1558857563-b371033873b8?w=800&h=500&fit=crop"
   },
 
   // === Coffee Shops (Issue #16) ===
