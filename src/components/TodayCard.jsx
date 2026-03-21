@@ -111,10 +111,22 @@ export function scoreSpot(spot, { availableMinutes, mood, season, timeOfDay }) {
 /**
  * getSuggestions — returns spots ranked by score, best first,
  * then interleaved by category so consecutive suggestions vary.
+ *
+ * visitedCategories: string[] — categories already visited this session.
+ * Spots in those categories get a score penalty so the user sees
+ * different kinds of places after each visit.
  */
-export function getSuggestions(spots, context) {
+export function getSuggestions(spots, context, visitedCategories = []) {
+  const VISITED_CATEGORY_PENALTY = 15;
+
   const scored = [...spots]
-    .map(spot => ({ spot, score: scoreSpot(spot, context) }))
+    .map(spot => {
+      let score = scoreSpot(spot, context);
+      // Penalize categories the user already visited today
+      const timesVisited = visitedCategories.filter(c => c === spot.category).length;
+      if (timesVisited > 0) score -= VISITED_CATEGORY_PENALTY * timesVisited;
+      return { spot, score };
+    })
     .sort((a, b) => b.score - a.score);
 
   // Group by category, preserving score order within each group
@@ -127,8 +139,8 @@ export function getSuggestions(spots, context) {
 
   // Round-robin across categories, highest-scored category first
   const categoryOrder = Object.keys(buckets).sort(
-    (a, b) => (buckets[b][0] ? scoreSpot(buckets[b][0], context) : 0)
-            - (buckets[a][0] ? scoreSpot(buckets[a][0], context) : 0)
+    (a, b) => (scored.find(e => e.spot.category === b)?.score ?? 0)
+            - (scored.find(e => e.spot.category === a)?.score ?? 0)
   );
 
   const result = [];
@@ -413,13 +425,14 @@ export default function TodayCard({ spots = SAMPLE_SPOTS }) {
   const [memories, setMemories] = useState([]);
   const [showMemories, setShowMemories] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [visitedCategories, setVisitedCategories] = useState([]);
 
   const season = getCurrentSeason();
   const timeOfDay = getCurrentTimeOfDay();
   const spot = suggestions[currentIndex] ?? null;
 
-  function buildSuggestions() {
-    const ranked = getSuggestions(spots, { availableMinutes, mood, season, timeOfDay });
+  function buildSuggestions(visited = visitedCategories) {
+    const ranked = getSuggestions(spots, { availableMinutes, mood, season, timeOfDay }, visited);
     setSuggestions(ranked);
     setCurrentIndex(0);
     setRejections(0);
@@ -441,6 +454,10 @@ export default function TodayCard({ spots = SAMPLE_SPOTS }) {
   }
 
   function handleGo() {
+    // Record this category as visited for the session
+    if (spot?.category) {
+      setVisitedCategories(prev => [...prev, spot.category]);
+    }
     setStep("going");
   }
 
@@ -454,6 +471,15 @@ export default function TodayCard({ spots = SAMPLE_SPOTS }) {
     setStep("setup");
     setCurrentIndex(0);
     setRejections(0);
+  }
+
+  // After a visit, rebuild suggestions with visited categories so
+  // the next recommendation favors a different kind of place
+  function handleFindAnother() {
+    const visited = spot?.category
+      ? [...visitedCategories, spot.category]
+      : visitedCategories;
+    buildSuggestions(visited);
   }
 
   const meta = spot ? (CATEGORY_META[spot.category] ?? { emoji: "📍", label: "Place" }) : null;
@@ -656,7 +682,7 @@ export default function TodayCard({ spots = SAMPLE_SPOTS }) {
           <p style={styles.doneCount}>
             {memories.length} {memories.length === 1 ? "memory" : "memories"} in your collection
           </p>
-          <button style={styles.btnGo} onClick={handleReset}>
+          <button style={styles.btnGo} onClick={handleFindAnother}>
             Find another place →
           </button>
         </div>
