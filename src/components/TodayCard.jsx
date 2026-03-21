@@ -109,13 +109,41 @@ export function scoreSpot(spot, { availableMinutes, mood, season, timeOfDay }) {
 }
 
 /**
- * getSuggestions — returns spots ranked by score, best first
+ * getSuggestions — returns spots ranked by score, best first,
+ * then interleaved by category so consecutive suggestions vary.
  */
 export function getSuggestions(spots, context) {
-  return [...spots]
+  const scored = [...spots]
     .map(spot => ({ spot, score: scoreSpot(spot, context) }))
-    .sort((a, b) => b.score - a.score)
-    .map(({ spot }) => spot);
+    .sort((a, b) => b.score - a.score);
+
+  // Group by category, preserving score order within each group
+  const buckets = {};
+  for (const entry of scored) {
+    const cat = entry.spot.category || "other";
+    if (!buckets[cat]) buckets[cat] = [];
+    buckets[cat].push(entry.spot);
+  }
+
+  // Round-robin across categories, highest-scored category first
+  const categoryOrder = Object.keys(buckets).sort(
+    (a, b) => (buckets[b][0] ? scoreSpot(buckets[b][0], context) : 0)
+            - (buckets[a][0] ? scoreSpot(buckets[a][0], context) : 0)
+  );
+
+  const result = [];
+  let remaining = true;
+  while (remaining) {
+    remaining = false;
+    for (const cat of categoryOrder) {
+      if (buckets[cat].length > 0) {
+        result.push(buckets[cat].shift());
+        remaining = true;
+      }
+    }
+  }
+
+  return result;
 }
 
 // ─────────────────────────────────────────────
