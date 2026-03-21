@@ -288,12 +288,15 @@ npm run build    # outputs to docs/
 
 ```bash
 npm run build
+touch docs/.nojekyll          # build wipes docs/ — must re-add every time
 # bump ?v= in docs/index.html
 # <script src="/stardust/assets/index.js?v=20260320a"></script>
 git add docs/ && git commit -m "deploy" && git push
 ```
 
 GitHub Pages serves from `docs/` on `main` automatically.
+
+**Critical:** `npm run build` wipes the entire `docs/` directory. You MUST run `touch docs/.nojekyll` after every build, or GitHub Pages will run Jekyll and fail on `{{ }}` syntax in code blocks.
 
 ---
 
@@ -393,7 +396,7 @@ When adding a new category, add a new SVG + `createIcon()` call and handle it in
 - **`setDoc` with merge does NOT handle dot-notation as nested paths** — use `updateDoc` for nested updates
 - **Google OAuth tokens expire after ~60 min** — persisted in sessionStorage with 55-min TTL; Firebase restores auth on refresh but NOT the Google token
 - **`vite.config.js` has `base: '/stardust/'`** — do not change
-- **`npm run build` resets `docs/index.html`** — always re-add `?v=` cache-buster after building. Use `/deploy` skill.
+- **`npm run build` wipes `docs/`** — always re-add `?v=` cache-buster AND run `touch docs/.nojekyll` after building. Without `.nojekyll`, Jekyll chokes on `{{ }}` in code blocks.
 - **Firestore serves stale spot images until re-seed runs** — bump `SEED_VERSION` in `useSpots.js` when `spots.js` images change
 - **Preview server must be stopped + restarted after rebuild** — `preview_stop` then `preview_start`
 - **When fixing spot images, use line-by-line Python, NOT regex** — multi-line regex with `re.DOTALL` can silently delete entire spot entries
