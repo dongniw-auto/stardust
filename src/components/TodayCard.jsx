@@ -56,7 +56,8 @@ export function scoreSpot(spot, { availableMinutes, mood, season, timeOfDay }) {
   let score = 0;
 
   // 1. TIME FIT (0–35 pts) — most important signal
-  const duration = spot.estimatedDuration ?? 60;
+  // Support both estimatedDuration (inline samples) and estimatedHikingTime (spots.js data)
+  const duration = spot.estimatedDuration ?? spot.estimatedHikingTime ?? 60;
   if (duration <= availableMinutes) {
     // fits comfortably — score by how well it uses the time
     const fit = 1 - Math.abs(duration - availableMinutes * 0.75) / availableMinutes;
@@ -77,19 +78,32 @@ export function scoreSpot(spot, { availableMinutes, mood, season, timeOfDay }) {
   if (spot.starred && spot.visitCount === 0) score += 15;
 
   // 4. SEASONAL FIT (0–10 pts)
-  if (spot.bestSeasons?.includes(season)) score += 10;
+  // Support both bestSeasons (array) and bestSeason (string)
+  const seasons = spot.bestSeasons ?? (spot.bestSeason ? [spot.bestSeason] : []);
+  const seasonMatches = seasons.some(s => s.toLowerCase().includes(season));
+  if (seasonMatches) score += 10;
   if (spot.shaded && season === "summer")  score += 8;
 
   // 5. TIME OF DAY FIT (0–8 pts)
   if (spot.bestTimeOfDay?.includes(timeOfDay)) score += 8;
-  // cafes are great in morning/afternoon
+  // category-based time-of-day bonuses
   if (spot.category === "cafe" && ["morning", "afternoon"].includes(timeOfDay)) score += 5;
-  // libraries shine in afternoon/evening
   if (spot.category === "library" && ["afternoon", "evening"].includes(timeOfDay)) score += 5;
+  if (spot.category === "outdoors" && ["morning", "midday", "afternoon"].includes(timeOfDay)) score += 5;
+  if (spot.category === "sports" && ["morning", "midday", "afternoon"].includes(timeOfDay)) score += 5;
+  if (spot.category === "wellness" && ["morning", "afternoon", "evening"].includes(timeOfDay)) score += 5;
 
   // 6. MOOD MATCH (0–7 pts)
   if (mood === "need quiet" && spot.vibes?.includes("quiet")) score += 7;
   if (mood === "open"       && spot.vibes?.includes("social")) score += 3;
+  // Category-based mood matching for spots without vibes data
+  if (!spot.vibes) {
+    if (mood === "need quiet" && ["library", "outdoors", "wellness"].includes(spot.category)) score += 5;
+    if (mood === "open" && ["cafe", "sports"].includes(spot.category)) score += 3;
+  }
+
+  // 7. VARIETY — small random jitter to avoid always showing the same spot (0–3 pts)
+  score += Math.floor(Math.random() * 4);
 
   return Math.max(0, score);
 }
