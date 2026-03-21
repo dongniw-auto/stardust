@@ -25,6 +25,7 @@ function App() {
   const [planningSpot, setPlanningSpot] = useState(null)
   const [mapCenter, setMapCenter] = useState([37.7749, -122.4194])
   const [activeTab, setActiveTab] = useState('today')
+  const [memories, setMemories] = useState([])
   const [filters, setFilters] = useState({
     petFriendly: false,
     kidFriendly: false,
@@ -106,6 +107,10 @@ function App() {
     setFilteredSpots(applyFilters(spots, newFilters))
   }
 
+  const handleMemoryAdd = useCallback((memory) => {
+    setMemories(prev => [memory, ...prev])
+  }, [])
+
   const planCount = Object.keys(mergedPlans).length
 
   return (
@@ -128,7 +133,7 @@ function App() {
 
       {activeTab === 'today' && (
         <main className="page">
-          <TodayCard spots={spots} />
+          <TodayCard spots={spots} memories={memories} onMemoryAdd={handleMemoryAdd} />
         </main>
       )}
 
@@ -176,6 +181,7 @@ function App() {
           <SavedPlans
             plans={mergedPlans}
             spots={spots}
+            memories={memories}
             onDeletePlan={deletePlan}
             onOpenPlan={(spot) => { setPlanningSpot(spot) }}
             googleAccessToken={googleAccessToken}
@@ -231,8 +237,8 @@ function App() {
             <line x1="8" y1="2" x2="8" y2="6" />
             <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
-          <span>Plans</span>
-          {planCount > 0 && <span className="tab-badge">{planCount}</span>}
+          <span>Stardust</span>
+          {(planCount > 0 || memories.length > 0) && <span className="tab-badge">{planCount + memories.length}</span>}
         </button>
       </nav>
     </div>
