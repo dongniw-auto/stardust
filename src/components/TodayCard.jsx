@@ -400,8 +400,8 @@ function CollectStardustModal({ spot, onSave, onClose }) {
         </div>
 
         <div style={styles.modalActions}>
-          <button style={{ ...styles.btnGhost, width: "auto", flex: 1 }} onClick={onClose}>Skip</button>
-          <button style={styles.btnPrimary} onClick={handleSave}>✦ Save</button>
+          <button style={{ ...styles.btnGhost, flex: 1 }} onClick={onClose}>Skip</button>
+          <button style={{ ...styles.btnPrimary, flex: 1 }} onClick={handleSave}>✦ Save</button>
         </div>
       </div>
     </div>
@@ -1054,6 +1054,7 @@ const styles = {
     alignItems: "flex-end",
     justifyContent: "center",
     zIndex: 100,
+    paddingBottom: 62,
   },
   modalCard: {
     width: "100%",
@@ -1063,7 +1064,7 @@ const styles = {
     border: `1px solid ${COLORS.border}`,
     borderBottom: "none",
     padding: "24px 20px 24px",
-    maxHeight: "calc(85vh - 60px)",
+    maxHeight: "calc(100vh - 130px)",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
