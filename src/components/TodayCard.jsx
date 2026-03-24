@@ -1064,12 +1064,15 @@ const styles = {
     borderBottom: "none",
     padding: "24px 20px 40px",
     maxHeight: "85vh",
-    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
     boxShadow: `0 -4px 24px ${COLORS.shadow}`,
   },
   modalHeader: {
     textAlign: "center",
     marginBottom: 24,
+    flexShrink: 0,
   },
   modalStar: {
     display: "block",
@@ -1092,12 +1095,16 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: 16,
+    overflowY: "auto",
+    flex: 1,
+    minHeight: 0,
   },
   modalActions: {
     display: "flex",
     gap: 10,
     marginTop: 24,
     alignItems: "stretch",
+    flexShrink: 0,
   },
   fieldLabel: {
     fontSize: 11,
